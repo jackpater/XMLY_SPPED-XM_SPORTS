@@ -989,10 +989,11 @@ def get_uid(cookies):
 def serverJ(title, content):
     print("\n")
     sckey = SCKEY
-    if "SCKEY" in os.environ:
+    """ if "SCKEY" in os.environ:
         """
         判断是否运行自GitHub action,"SCKEY" 该参数与 repo里的Secrets的名称保持一致
         """
+    """
         sckey = os.environ["SCKEY"]
 
     if not sckey:
@@ -1025,9 +1026,9 @@ def telegram_bot(title, content):
     print("\n")
     tg_bot_token = TG_BOT_TOKEN
     tg_user_id = TG_USER_ID
-    if "TG_BOT_TOKEN" in os.environ and "TG_USER_ID" in os.environ:
+    """if "TG_BOT_TOKEN" in os.environ and "TG_USER_ID" in os.environ:
         tg_bot_token = os.environ["TG_BOT_TOKEN"]
-        tg_user_id = os.environ["TG_USER_ID"]
+    """    tg_user_id = os.environ["TG_USER_ID"]
     if not tg_bot_token or not tg_user_id:
         print("Telegram推送的tg_bot_token或者tg_user_id未设置!!\n取消推送")
         return
