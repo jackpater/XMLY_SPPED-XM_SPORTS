@@ -100,7 +100,7 @@ def main(user, passwd, step):
     
     response = requests.post(url, data=data, headers=head).json()
     #print(response)
-    result = f"{user[:2]}********{user[-2:]}: [{now}] Tom Hanks, [25.01.21 20:49]\n修改🏃🏻‍♂️步数🏃🏻‍♀️:{step}"+ response['message']
+    result = f"{user[:2]}********{user[-2:]}: 【{now}】\n修改步数：🏃🏻‍♂️{step}🏃🏻‍♀️"+ response['message']
     print(result)
     return result
   
