@@ -63,25 +63,27 @@ def isJumpIndex(idx):
     return index >= 0
 
 
-def smartNotify(content):
-    notify_bark = readSecret("BARK_PUSH")
-    notify_serverJ = readSecret("SCKEY")
-    if not content:
-        return content
-    if notify_bark is not None:
-        print("bark通知已开启")
-        content = content.replace(
-            'bark_token = BARK', 'bark_token="'+notify_bark+'"', 1)
-    if notify_serverJ is not None:
-        print("server酱通知已开启")
-        content = content.replace(
-            'sckey = SCKEY', 'sckey="'+notify_serverJ+'"', 1)
-
-    # only for test
-    # content = content.replace(
-    #     'if _notify_time.split()[0] == str(notify_time) and int(_notify_time.split()[1]) > 30:', 'if True:', 1)
-    return content
-
+# 推送server
+def push_wx(sckey, desp=""):
+    """
+    推送消息到微信
+    """
+    if sckey == '':
+        print("[注意] 未提供sckey，不进行推送！")
+    else:
+        server_url = f"https://sc.ftqq.com/{sckey}.send"
+        params = {
+            "text": '喜马拉雅极速版 签到刷金币',
+            "desp": desp
+        }
+ 
+        response = requests.get(server_url, params=params)
+        json_data = response.json()
+ 
+        if json_data['errno'] == 0:
+            print(f"[{now}] 推送成功。")
+        else:
+            print(f"[{now}] 推送失败：{json_data['errno']}({json_data['errmsg']})")
 
 def run():
     cookies = readSecret("XMLY_SPEED_COOKIE")
