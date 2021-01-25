@@ -1001,7 +1001,7 @@ def serverJ(title, content):
     print("serverJ服务启动")
     data = {
         "text": title,
-        "desp": content.replace("\n", "\n\n")+"\n\n [打赏作者](https://github.com/Zero-S1/xmly_speed/blob/master/thanks.md)"
+        "desp": content.replace("\n", "\n\n")
     }
     response = requests.post(f"https://sc.ftqq.com/{sckey}.send", data=data)
     print(response.text)
@@ -1040,7 +1040,7 @@ def telegram_bot(title, content):
 
 
 def run():
-    print(f"喜马拉雅极速版 (https://github.com/Zero-S1/xmly_speed/blob/master/xmly_speed.md ) ,欢迎打赏¯\(°_o)/¯")
+    print(f"喜马拉雅极速版")
     mins, date_stamp, _datatime, _notify_time = get_time()
     table = []
     for k, v in enumerate(cookiesList):
