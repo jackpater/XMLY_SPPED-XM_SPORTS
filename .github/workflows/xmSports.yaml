@@ -1,13 +1,12 @@
 name: 小米运动刷步数
 
 on:
-  workflow_dispatch:
-    schedule:
-        - cron: "2 10 * * *"
-    watch:
-        types: [started]
-    repository_dispatch:
-        types: xmSports
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: 2 10 * * *
 
 jobs:
   build:
