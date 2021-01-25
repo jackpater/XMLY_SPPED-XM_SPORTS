@@ -28,7 +28,7 @@ jobs:
         pwd='${{ secrets.PWD }}'
         step='${{ secrets.STEP }}'
         
-        python3 main.py <<EOF
+        python3 xmSports.py <<EOF
         ${sckey}
         ${user}
         ${pwd}
