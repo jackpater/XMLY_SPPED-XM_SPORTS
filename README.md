@@ -4,7 +4,7 @@
 
 ### 二、设置账号密码
 
-添加名为  **SCKEY**、**XMLY_SPEED_COOKIE**的变量，值分别为 **server酱推送key**、 **喜马拉雅极速版COOKIE**
+添加名为  **TG_BOT_TOKEN**、**TG_USER_ID**、**XMLY_SPEED_COOKIE**的变量，值分别为 **TG推送token**、 **TG推送id**、**喜马拉雅极速版COOKIE**
 > Settings-->Secrets-->New secret
 
 # 小米运动自动刷步数
