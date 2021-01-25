@@ -3,7 +3,10 @@
 
 import requests,time,re,json,random
 
-now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+timestamp = items.get('created')  # 时间戳
+time_local = time.localtime(int(timestamp))  # 注意：这里的整数不能超过11位数
+#now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+now = time.strftime("%Y-%m-%d %H:%M:%S", time.local
 headers = {
         'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 10; 16th Build/QKQ1.191222.002)'#修改为自己的User-Agent
         }
@@ -98,7 +101,7 @@ def main(user, passwd, step):
     
     response = requests.post(url, data=data, headers=head).json()
     #print(response)
-    result = f"{user[:4]}****{user[-4:]}: [{now}] 修改步数（{step}）"+ response['message']
+    result = f"{user[:2]}********{user[-2:]}: [{now}] 修改步数（{step}）"+ response['message']
     print(result)
     return result
   
