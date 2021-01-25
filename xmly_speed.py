@@ -101,24 +101,6 @@ def run():
     else:
         rewriteAgent = 'UserAgent = "' + rewriteAgent + '"'
 
-    for idx, xmlyCookie in enumerate(cookies.split('\n')):
-        executeContent = webFileContent.replace(
-            'xmly_speed_cookie = os.environ["XMLY_SPEED_COOKIE"]', 'xmly_speed_cookie = "' + xmlyCookie + '"', 1)
-        if xmlyCookie.find("_device=android") > 0:  # 此时表示是获取的安卓的cookie,需要使用安卓的agent
-            executeContent = re.sub(agentPattern, rewriteAgent, executeContent)
-        if isOver():
-            executeContent = executeContent.replace(
-                "XMLY_ACCUMULATE_TIME = 1", "XMLY_ACCUMULATE_TIME = 0", 1)
-            print("XMLY_ACCUMULATE_HOURS配置生效,索引" +
-                  str(idx)+"的数据执行了禁用当天继续刷新时长的操作")
-        if isJumpIndex(idx+1):
-            executeContent = executeContent.replace(
-                "XMLY_ACCUMULATE_TIME = 1", "XMLY_ACCUMULATE_TIME = 0", 1)
-            print("XMLY_ACCUMULATE_INDEX配置生效,为索引" +
-                  str(idx)+"的数据执行了禁用当天刷新时长的操作")
-        executeContent = smartNotify(executeContent)
-        writeFile(executeContent, 'execute'+str(idx)+'.py')
-        os.system('python ./'+'execute'+str(idx)+'.py')
     print("\n***************************\n文件全部执行完毕")
     exit(0)
 
