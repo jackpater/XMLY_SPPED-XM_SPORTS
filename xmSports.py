@@ -1,12 +1,11 @@
 # -*- coding: utf8 -*-
 # python >=3.8
 
-import requests,time,re,json,random
+import requests,datetime,time,re,json,random
 
-timestamp = items.get('created')  # 时间戳
-time_local = time.localtime(int(timestamp))  # 注意：这里的整数不能超过11位数
-#now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-now = time.strftime("%Y-%m-%d %H:%M:%S", time.local)
+timenow = (datetime.datetime.utcnow() + datetime.timedelta(hours=8)) #将utc时间转化为本地时间
+now = timenow.strftime('%Y-%m-%d %H:%M:%S')#本地时间
+
 headers = {
         'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 10; 16th Build/QKQ1.191222.002)'#修改为自己的User-Agent
         }
