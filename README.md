@@ -1,6 +1,5 @@
-# XMLY_SPPED 
-> 喜马拉雅极速版自动签到刷时长
-
+# 喜马拉雅极速版自动签到刷时长 
+## Github Actions 部署指南
 ### 一、Fork 此仓库
 
 ### 二、设置账号密码
@@ -9,7 +8,6 @@
 > Settings-->Secrets-->New secret
 
 # 小米运动自动刷步数
-> 小米运动自动刷步数
 
 ## Github Actions 部署指南
 
