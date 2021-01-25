@@ -65,7 +65,7 @@ def isJumpIndex(idx):
 
 def smartNotify(content):
     notify_bark = readSecret("BARK_PUSH")
-    notify_serverJ = readSecret("PUSH_KEY")
+    notify_serverJ = readSecret("SCKEY")
     if not content:
         return content
     if notify_bark is not None:
@@ -95,7 +95,7 @@ def run():
 
     rewriteAgent = readSecret("XMLY_ANDROID_AGENT")
     if rewriteAgent is None:
-        rewriteAgent = 'UserAgent = "ting_1.8.30(Redmi+7,Android28)"'
+        rewriteAgent = 'UserAgent = "ting_2.0.9(16th,Android29)"'
     else:
         rewriteAgent = 'UserAgent = "' + rewriteAgent + '"'
 
