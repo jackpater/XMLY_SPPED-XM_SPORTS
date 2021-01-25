@@ -1019,9 +1019,8 @@ def bark(title, content):
 
 def telegram_bot(title, content):
     print("\n")
-    tg_bot_token = TG_BOT_TOKEN
-    tg_user_id = TG_USER_ID
-    #if "TG_BOT_TOKEN" in os.environ and "TG_USER_ID" in os.environ:
+#    tg_bot_token = TG_BOT_TOKEN
+#    tg_user_id = TG_USER_ID
     tg_bot_token = os.environ["TG_BOT_TOKEN"]
     tg_user_id = os.environ["TG_USER_ID"]
     if not tg_bot_token or not tg_user_id:
@@ -1076,7 +1075,7 @@ def run():
             message += f"[{i[0].replace(' ',''):<9}]: {i[1]:<6.2f} (＋{i[2]:<4.2f}) {i[3]:<7.2f} {i[4]}\\30\n"
         message += "⭕tips:第30天需要手动签到"
         if len(table) <= 4:
-            message = "【设备】| 当前剩余 | 今天| 历史| 连续签到\n"+message
+            message = "【设备】| 剩余 | 今天| 历史| 连续签到\n"+message
 
         bark("⏰ 喜马拉雅极速版", message)
         serverJ("⏰ 喜马拉雅极速版", message)
