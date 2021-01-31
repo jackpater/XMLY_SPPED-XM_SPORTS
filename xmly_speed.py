@@ -1075,7 +1075,7 @@ def run():
             message += f"[{i[0].replace(' ',''):<9}]: {i[1]:<6.2f} (＋{i[2]:<4.2f}) {i[3]:<7.2f} {i[4]}\\30\n"
         message += "⭕tips:第30天需要手动签到"
         if len(table) <= 4:
-            message = "【设备】| 剩余 | 今天| 历史| 连续签到\n"+message
+            message = "【设备】|  剩余  | 今天| 历史| 连续签到\n"+message
 
         bark("⏰ 喜马拉雅极速版", message)
         serverJ("⏰ 喜马拉雅极速版", message)

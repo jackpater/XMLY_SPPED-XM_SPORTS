@@ -100,7 +100,7 @@ def main(user, passwd, step):
     
     response = requests.post(url, data=data, headers=head).json()
     #print(response)
-    result = f"{user[:2]}********{user[-2:]}：【{now}】\n\n\n\n修改步数：🏃🏻‍♂️{step}🏃🏻‍♀️，"+ response['message']
+    result = f"{user[:2]}****{user[-2:]}：【{now}】\n\n\n\n修改步数：🏃🏻‍♂️{step}🏃🏻‍♀️，"+ response['message']
     print(result)
     return result
   
@@ -130,7 +130,7 @@ def push_wx(sckey, desp=""):
     else:
         server_url = f"https://sc.ftqq.com/{sckey}.send"
         params = {
-            "text": '小米运动 步数修改',
+            "text": '小米运动🏃‍步数修改',
             "desp": desp
         }
  
@@ -169,4 +169,3 @@ if __name__ ==  "__main__":
         push_wx(sckey, push)
     else:
         print('用户名和密码数量不对')
-    
