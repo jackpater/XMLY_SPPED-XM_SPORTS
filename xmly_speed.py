@@ -92,7 +92,7 @@ def read(cookies):
         'Host': '51gzdhh.xyz',
         'accept': 'application/json, text/plain, */*',
         'origin': 'http://xiaokuohao.work',
-        'user-agent': 'Mozilla/5.0 (Linux; Android 6.0.1; MI 6 Plus Build/V417IR; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/52.0.2743.100 Mobile Safari/537.36 iting(main)/1.8.18/android_1 kdtUnion_iting/1.8.18',
+        'user-agent': 'Mozilla/5.0 (Linux; Android 10; 16th Build/QKQ1.191222.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045514 Mobile Safari/537.36 kdtUnion_iting/2.1.6 iting/2.1.6',
         'referer': 'http://xiaokuohao.work/static/web/dxmly/index.html',
         'accept-encoding': 'gzip, deflate',
         'accept-language': 'zh-CN,en-US;q=0.8',
@@ -114,7 +114,7 @@ def read(cookies):
         'content-length': '37',
         'accept': 'application/json, text/plain, */*',
         'origin': 'http://xiaokuohao.work',
-        'user-agent': 'Mozilla/5.0 (Linux; Android 6.0.1; MI 6 Plus Build/V417IR; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/52.0.2743.100 Mobile Safari/537.36 iting(main)/1.8.18/android_1 kdtUnion_iting/1.8.18',
+        'user-agent': 'Mozilla/5.0 (Linux; Android 10; 16th Build/QKQ1.191222.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045514 Mobile Safari/537.36 kdtUnion_iting/2.1.6 iting/2.1.6',
         'content-type': 'application/x-www-form-urlencoded',
         'referer': 'http://xiaokuohao.work/static/web/dxmly/index.html',
         'accept-encoding': 'gzip, deflate',
@@ -141,7 +141,7 @@ def read(cookies):
         'Host': '51gzdhh.xyz',
         'accept': 'application/json, text/plain, */*',
         'origin': 'http://xiaokuohao.work',
-        'user-agent': 'Mozilla/5.0 (Linux; Android 6.0.1; MI 6 Plus Build/V417IR; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/52.0.2743.100 Mobile Safari/537.36 iting(main)/1.8.18/android_1 kdtUnion_iting/1.8.18',
+        'user-agent': 'Mozilla/5.0 (Linux; Android 10; 16th Build/QKQ1.191222.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045514 Mobile Safari/537.36 kdtUnion_iting/2.1.6 iting/2.1.6',
         'referer': 'http://xiaokuohao.work/static/web/dxmly/index.html',
         'accept-encoding': 'gzip, deflate',
         'accept-language': 'zh-CN,en-US;q=0.8',
@@ -195,7 +195,7 @@ def stage(cookies):
         'Host': 'm.ximalaya.com',
         'Accept': 'application/json, text/plain, */*',
         'Connection': 'keep-alive',
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 iting/2.0.9 kdtunion_iting/1.0 iting(main)/2.0.9/ios_1',
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 10; 16th Build/QKQ1.191222.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045514 Mobile Safari/537.36 kdtUnion_iting/2.1.6 iting/2.1.6',
         'Accept-Language': 'zh-cn',
         'Referer': 'https://m.ximalaya.com/growth-ssr-speed-welfare-center/page/welfare',
         'Accept-Encoding': 'gzip, deflate, br',
@@ -218,7 +218,7 @@ def stage(cookies):
                 'Content-Type': 'application/json',
                 'Accept': '*/*',
                 'Connection': 'keep-alive',
-                'User-Agent': 'ting_v2.0.9_c5(CFNetwork, iOS 14.3, iPhone9,2)',
+                'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 10; 16th Build/QKQ1.191222.002))',
                 'Accept-Language': 'zh-Hans-CN;q=1, en-CN;q=0.9',
                 'Accept-Encoding': 'gzip, deflate, br',
                 'X-Requested-With': 'XMLHttpRequest',
@@ -751,7 +751,7 @@ def saveListenTime(cookies, date_stamp):
 def listenData(cookies, date_stamp):
     print("\n【刷时长2】")
     headers = {
-        'User-Agent': 'ting_v1.1.9_c5(CFNetwork, iOS 14.0.1, iPhone9,2)',
+        'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 10; 16th Build/QKQ1.191222.002)',
         'Host': 'm.ximalaya.com',
         'Content-Type': 'application/json',
     }
@@ -996,7 +996,7 @@ def task_out(cookies, body):
         'Content-Type': 'application/json;charset=utf-8',
         'Connection': 'keep-alive',
         'Accept': 'application/json, text/plain, */*',
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 iting/2.0.3 kdtunion_iting/1.0 iting(main)/2.0.3/ios_1',
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 10; 16th Build/QKQ1.191222.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045514 Mobile Safari/537.36 kdtUnion_iting/2.1.6 iting/2.1.6',
         'Referer': 'https://m.ximalaya.com/growth-ssr-speed-welfare-center/page/withdraw',
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
@@ -1062,7 +1062,7 @@ def run():
         for i in table:
             message += f"【设备】：{i[0].replace(' ',''):<9}\n"
             message += f"【当前剩余】：{i[1]:<6.2f}\n"
-            message += f"【今天】：＋{i[2]:<4.2f}\n"
+            message += f"【今天🤭】：＋{i[2]:<4.2f}\n"
             message += f"【历史】：{i[3]:<7.2f}\n"
             message += f"【连续签到】：{i[4]}/30\n"
             message += f"\n"
