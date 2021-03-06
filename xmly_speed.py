@@ -1011,7 +1011,7 @@ def task_out(cookies, body):
         print("网络请求异常,为避免GitHub action报错,直接跳过")
 
 def run():
-    print(f"喜马拉雅极速版 (https://github.com/Zero-S1/xmly_speed/blob/master/xmly_speed.md ) ,欢迎打赏¯\(°_o)/¯")
+    print(f"😄喜马拉雅极速版")
     mins, date_stamp, _datatime, _notify_time = get_time()
     title = '⏰ 喜马拉雅极速版'
     table = []
