@@ -1060,11 +1060,11 @@ def run():
     # if 1:
         message = ''
         for i in table:
-            message += f"【设备】：{i[0].replace(' ',''):<9}\n"
-            message += f"【当前剩余】：{i[1]:<6.2f}\n"
-            message += f"【今天🤭】：＋{i[2]:<4.2f}\n"
-            message += f"【历史】：{i[3]:<7.2f}\n"
-            message += f"【连续签到】：{i[4]}/30\n"
+            message += f"【当前设备】：{i[0].replace(' ',''):<9}\n"
+            message += f"【当前剩余】：{i[1]:<6.2f}元\n"
+            message += f"【今天😄 】：＋{i[2]:<4.2f}元\n"
+            message += f"【历史💴 】：{i[3]:<7.2f}元\n"
+            message += f"【连续签到】：{i[4]}/30天\n"
             message += f"\n"
 
         send(title=title, content=message)
