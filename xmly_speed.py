@@ -1009,6 +1009,24 @@ def task_out(cookies, body):
         print(response)
     except:
         print("网络请求异常,为避免GitHub action报错,直接跳过")
+def user_info(cookies):
+    print("\n【用户信息】")
+    headers = {
+        'Host': 'mobile.ximalaya.com',
+        'Accept': '*/*',
+        'User-Agent': 'ting_v2.1.3_c5(CFNetwork, iOS 14.4, iPhone13,2)',
+        'Accept-Language': 'zh-cn',
+        'Accept-Encoding': 'gzip, deflate, br',
+    }
+    currentTimeMillis = int(time.time()*1000)-2
+    try:
+        response = requests_session().get(
+            f'https://mobile.ximalaya.com/fmobile-user/homePage/ts-{currentTimeMillis}', headers=headers, cookies=cookies).json()
+        print(response)
+        if response['ret'] == 0:
+            return response
+    except:
+        print("网络请求异常,为避免GitHub action报错,直接跳过")
 
 def run():
     print(f"😄喜马拉雅极速版")
@@ -1018,6 +1036,7 @@ def run():
     for k, v in enumerate(cookiesList):
         print(f">>>>>>>【账号开始{k+1}】\n")
         cookies = str2dict(v)
+        user_info_res = user_info(cookies)
         if XMLY_ACCUMULATE_TIME == 1:
             saveListenTime(cookies, date_stamp)
             listenData(cookies, date_stamp)
@@ -1050,9 +1069,9 @@ def run():
                         "accountNumber": pay_info["accountNumber"], "amount": amount, "takeOutType": takeOutType}
                 task_out_res = task_out(cookies=cookies, body=body)
                 if task_out_res:
-                    send(title=title, content=f"{device} 提现到账户【{pay_info['accountNumber']}】20元成功")
+                    send(title=title, content=f"{user_info_res['nickname']} 提现到账户【{pay_info['accountNumber']}】20元成功")
             else:
-                send(title=title, content=f"请先手动填写【账号{k+1}】支付宝账号提现一次")
+                send(title=title, content=f"请先手动填写【user_info_res['nickname']】支付宝账号提现一次")
         print("###"*20)
         print("\n"*4)
 
@@ -1060,10 +1079,10 @@ def run():
     # if 1:
         message = ''
         for i in table:
-            message += f"【当前设备】：{i[0].replace(' ',''):<9}\n"
+            message += f"【当前账户】：{i[0].replace(' ',''):<9}\n"
             message += f"【当前剩余】：{i[1]:<6.2f}元\n"
-            message += f"【今天😄 】：＋{i[2]:<4.2f}元\n"
-            message += f"【历史💴 】：{i[3]:<7.2f}元\n"
+            message += f"【今天😄  】：＋{i[2]:<4.2f}元\n"
+            message += f"【历史💴  】：{i[3]:<7.2f}元\n"
             message += f"【连续签到】：{i[4]}/30天\n"
             message += f"\n"
 
