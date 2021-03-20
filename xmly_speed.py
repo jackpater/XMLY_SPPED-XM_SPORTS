@@ -44,8 +44,8 @@ if "AUTO_TAKE_OUT" in os.environ:
     autoTakeOut = os.environ["AUTO_TAKE_OUT"]
 
 # 自定义设备命名,非必须 ;devices=["","huawei"];与cookiesList对应
-devices = ["16th"]
-notify_time = 19                            # 通知时间,24小时制,默认19
+devices = []
+notify_time =  23                           # 通知时间,24小时制,默认19
 XMLY_ACCUMULATE_TIME = 1                    # 希望刷时长的,此处置1,默认打开;关闭置0
 UserAgent = "Dalvik/2.1.0 (Linux; U; Android 10; 16th Build/QKQ1.191222.002)"
 
@@ -218,7 +218,7 @@ def stage(cookies):
                 'Content-Type': 'application/json',
                 'Accept': '*/*',
                 'Connection': 'keep-alive',
-                'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 10; 16th Build/QKQ1.191222.002))',
+                'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 10; 16th Build/QKQ1.191222.002)',
                 'Accept-Language': 'zh-Hans-CN;q=1, en-CN;q=0.9',
                 'Accept-Encoding': 'gzip, deflate, br',
                 'X-Requested-With': 'XMLHttpRequest',
