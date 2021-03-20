@@ -1,10 +1,3 @@
-'''
-Author: whyour
-Github: https://github.com/whyour
-Date: 2020-11-19 23:25:22
-LastEditors: whyour
-LastEditTime: 2021-01-18 13:46:46
-'''
 import json
 import rsa
 import base64
@@ -22,7 +15,7 @@ cookies1 = ""
 
 cookies2 = ""
 
-cookiesList = [cookies1, ]   # 多账号准备
+cookiesList = [cookies1, ]  # 多账号准备
 
 # 默认不自动提现
 autoTakeOut = False
@@ -42,14 +35,28 @@ if "XMLY_SPEED_COOKIE" in os.environ:
         cookiesList.append(line)
 if "AUTO_TAKE_OUT" in os.environ:
     autoTakeOut = os.environ["AUTO_TAKE_OUT"]
+    if autoTakeOut:
+        print("自动提现已启用")
+    else:
+        print("自动提现未启用")
 
-# 自定义设备命名,非必须 ;devices=["","huawei"];与cookiesList对应
-devices = ["16th"]
-notify_time = 19                            # 通知时间,24小时制,默认19
-XMLY_ACCUMULATE_TIME = 1                    # 希望刷时长的,此处置1,默认打开;关闭置0
-UserAgent = "Dalvik/2.1.0 (Linux; U; Android 10; 16th Build/QKQ1.191222.002)"
-
+# 自定义设备命名,非必须 ;devices=["iPhone7P","huawei"];与cookiesList对应
+devices = []
+notify_time = 23  # 通知时间,24小时制,默认19
+XMLY_ACCUMULATE_TIME = 1  # 希望刷时长的,此处置1,默认打开;关闭置0
+UserAgent = "Mozilla/5.0 (Linux; Android 10; 16th Build/QKQ1.191222.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045514 Mobile Safari/537.36 kdtUnion_iting/2.1.6 iting/2.1.6"
 # 非iOS设备的需要的自行修改,自己抓包 与cookie形式类似
+
+if "XMLY_ANDROID_AGENT" in os.environ and os.environ["XMLY_ANDROID_AGENT"]:
+    UserAgent = os.environ["XMLY_ANDROID_AGENT"]
+    print("UserAgent已修改")
+if "XMLY_ACCUMULATE_TIME" in os.environ and os.environ["XMLY_ACCUMULATE_TIME"] == '0':
+    XMLY_ACCUMULATE_TIME = 0
+    print("已关闭刷时长")
+if "NOTIFY_TIME" in os.environ and os.environ["NOTIFY_TIME"]:
+    notify_time = int(os.environ["NOTIFY_TIME"]) if 1 <= int(os.environ["NOTIFY_TIME"]) <= 24 else 23
+    print("通知时间为{}时".format(notify_time))
+
 
 def str2dict(str_cookie):
     if type(str_cookie) == dict:
@@ -75,16 +82,18 @@ def str2dict(str_cookie):
         raise
     return dict_cookie
 
+
 def get_time():
     mins = int(time.time())
-    date_stamp = (mins-57600) % 86400
+    date_stamp = (mins - 57600) % 86400
     utc_dt = datetime.utcnow()  # UTC时间
-    bj_dt = utc_dt+timedelta(hours=8)  # 北京时间
+    bj_dt = utc_dt + timedelta(hours=8)  # 北京时间
     _datatime = bj_dt.strftime("%Y%m%d", )
     notify_time = bj_dt.strftime("%H %M")
     print(f"\n当前时间戳: {mins}")
     print(f"北京时间: {bj_dt}\n\n")
     return mins, date_stamp, _datatime, notify_time
+
 
 def read(cookies):
     print("\n【阅读】")
@@ -148,7 +157,7 @@ def read(cookies):
         'x-requested-with': 'com.ximalaya.ting.lite',
     }
     taskIds = set(['242', '239', '241', '240', '238', '236',
-                   '237', '235', '234'])-set(result["completeList"])
+                   '237', '235', '234']) - set(result["completeList"])
     params = (
         ('userid', str(uid)),
         ('pid', pid),
@@ -163,6 +172,7 @@ def read(cookies):
         return 0
     result = response.json()
     print(result)
+
 
 def ans_receive(cookies, paperId, lastTopicId, receiveType):
     headers = {
@@ -188,6 +198,7 @@ def ans_receive(cookies, paperId, lastTopicId, receiveType):
         print("网络请求异常,为避免GitHub action报错,直接跳过")
         return 0
     return response.json()
+
 
 def stage(cookies):
     print("\n【新手任务】")
@@ -218,7 +229,7 @@ def stage(cookies):
                 'Content-Type': 'application/json',
                 'Accept': '*/*',
                 'Connection': 'keep-alive',
-                'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 10; 16th Build/QKQ1.191222.002))',
+                'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 10; 16th Build/QKQ1.191222.002)',
                 'Accept-Language': 'zh-Hans-CN;q=1, en-CN;q=0.9',
                 'Accept-Encoding': 'gzip, deflate, br',
                 'X-Requested-With': 'XMLHttpRequest',
@@ -231,6 +242,7 @@ def stage(cookies):
                 print("网络请求异常,为避免GitHub action报错,直接跳过")
                 return
             print(response.text)
+
 
 def ans_restore(cookies):
     headers = {
@@ -257,6 +269,7 @@ def ans_restore(cookies):
         return 0
     return 1
 
+
 def ans_getTimes(cookies):
     headers = {
         'Host': 'm.ximalaya.com',
@@ -280,6 +293,7 @@ def ans_getTimes(cookies):
     remainingTimes = result["data"]["remainingTimes"]
     return {"stamina": stamina,
             "remainingTimes": remainingTimes}
+
 
 def ans_start(cookies):
     headers = {
@@ -310,6 +324,7 @@ def ans_start(cookies):
         print("❌1 重新抓包 2 手动答题")
         return 0, 0, 0
 
+
 def _str2key(s):
     b_str = base64.b64decode(s)
     if len(b_str) < 162:
@@ -327,6 +342,7 @@ def _str2key(s):
     exponent = hex_str[e_start:e_start + e_len]
     return modulus, exponent
 
+
 def rsa_encrypt(s, pubkey_str):
     key = _str2key(pubkey_str)
     modulus = int(key[0], 16)
@@ -334,7 +350,9 @@ def rsa_encrypt(s, pubkey_str):
     pubkey = rsa.PublicKey(modulus, exponent)
     return base64.b64encode(rsa.encrypt(s.encode(), pubkey)).decode()
 
+
 pubkey_str = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCVhaR3Or7suUlwHUl2Ly36uVmboZ3+HhovogDjLgRE9CbaUokS2eqGaVFfbxAUxFThNDuXq/fBD+SdUgppmcZrIw4HMMP4AtE2qJJQH/KxPWmbXH7Lv+9CisNtPYOlvWJ/GHRqf9x3TBKjjeJ2CjuVxlPBDX63+Ecil2JR9klVawIDAQAB"
+
 
 def lottery_info(cookies):
     print("\n【幸运大转盘】")
@@ -382,6 +400,7 @@ def lottery_info(cookies):
                                        headers=headers, cookies=cookies, data=json.dumps(data))
     print(response.text)
 
+
 def index_baoxiang_award(cookies):
     print("\n  【首页、宝箱奖励及翻倍】")
     headers = {
@@ -389,10 +408,11 @@ def index_baoxiang_award(cookies):
         'Host': 'mobile.ximalaya.com',
     }
     uid = cookies["1&_token"].split("&")[0]
-    currentTimeMillis = int(time.time()*1000)-2
+    currentTimeMillis = int(time.time() * 1000) - 2
     try:
-        response = requests_session().post('https://mobile.ximalaya.com/pizza-category/activity/getAward?activtyId=baoxiangAward',
-                                           headers=headers, cookies=cookies)
+        response = requests_session().post(
+            'https://mobile.ximalaya.com/pizza-category/activity/getAward?activtyId=baoxiangAward',
+            headers=headers, cookies=cookies)
     except:
         return
     result = response.json()
@@ -459,6 +479,7 @@ def index_baoxiang_award(cookies):
             return
         print("翻倍: ", response.text)
 
+
 def checkin(cookies, _datatime):
     print("\n【连续签到】")
     headers = {
@@ -471,7 +492,7 @@ def checkin(cookies, _datatime):
         'Accept-Encoding': 'gzip, deflate, br',
     }
     params = (
-        ('time', f"""{int(time.time()*1000)}"""),
+        ('time', f"""{int(time.time() * 1000)}"""),
     )
     try:
         response = requests_session().get('https://m.ximalaya.com/speed/task-center/check-in/record',
@@ -502,6 +523,7 @@ def checkin(cookies, _datatime):
                                            headers=headers, cookies=cookies, data=json.dumps(data))
         print(response.text)
     return result["continuousDays"]
+
 
 def ad_score(cookies, businessType, taskId):
     headers = {
@@ -535,6 +557,7 @@ def ad_score(cookies, businessType, taskId):
         return
     print(response.text)
     print("\n")
+
 
 def bubble(cookies):
     print("\n【bubble】")
@@ -572,6 +595,7 @@ def bubble(cookies):
     for i in result["data"]["expiredBubbles"]:
         ad_score(cookies, 6, i["id"])
 
+
 def receive(cookies, taskId):
     headers = {
         'Host': 'm.ximalaya.com',
@@ -591,6 +615,7 @@ def receive(cookies, taskId):
     print("receive: ", response.text)
     return response.json()
 
+
 def getOmnipotentCard(cookies, mins, date_stamp, _datatime):
     print("\n 【领取万能卡】")
     headers = {
@@ -602,7 +627,7 @@ def getOmnipotentCard(cookies, mins, date_stamp, _datatime):
     }
     try:
         count = requests_session().get('https://m.ximalaya.com/speed/web-earn/card/omnipotentCardInfo',
-                                       headers=headers, cookies=cookies,).json()["data"]["count"]
+                                       headers=headers, cookies=cookies, ).json()["data"]["count"]
     except:
         print("网络请求异常,为避免GitHub action报错,直接跳过")
         return
@@ -611,10 +636,10 @@ def getOmnipotentCard(cookies, mins, date_stamp, _datatime):
         return
 
     token = requests_session().get('https://m.ximalaya.com/speed/web-earn/card/token/1',
-                                   headers=headers, cookies=cookies,).json()["data"]["id"]
+                                   headers=headers, cookies=cookies, ).json()["data"]["id"]
     uid = get_uid(cookies)
     data = {
-        "listenTime": mins-date_stamp,
+        "listenTime": mins - date_stamp,
         "signData": rsa_encrypt(f"{_datatime}{token}{uid}", pubkey_str),
         "token": token
     }
@@ -626,6 +651,7 @@ def getOmnipotentCard(cookies, mins, date_stamp, _datatime):
         return
     print(response.text)
 
+
 def cardReportTime(cookies, mins, date_stamp, _datatime):
     print("\n【收听获得抽卡机会】")
     headers = {
@@ -635,7 +661,7 @@ def cardReportTime(cookies, mins, date_stamp, _datatime):
         'Origin': 'https://m.ximalaya.com',
         'Referer': 'https://m.ximalaya.com/xmds-node-spa/apps/speed-growth-activities/card-collection/home',
     }
-    listenTime = mins-date_stamp
+    listenTime = mins - date_stamp
     uid = get_uid(cookies)
     data = {"listenTime": listenTime,
             "signData": rsa_encrypt(f"{_datatime}{listenTime}{uid}", pubkey_str), }
@@ -650,6 +676,7 @@ def cardReportTime(cookies, mins, date_stamp, _datatime):
         print("今日已达上限")
     except:
         return
+
 
 def account(cookies):
     print("\n【 打印账号信息】")
@@ -670,11 +697,12 @@ def account(cookies):
         print("网络请求异常,为避免GitHub action报错,直接跳过")
         return '', '', ''
     result = response.json()
-    total = result["total"]/10000
-    todayTotal = result["todayTotal"]/10000
-    historyTotal = result["historyTotal"]/10000
+    total = result["total"] / 10000
+    todayTotal = result["todayTotal"] / 10000
+    historyTotal = result["historyTotal"] / 10000
     print(f"""当前剩余:{total}\n今日获得:{todayTotal}\n累计获得:{historyTotal}\n""")
     return total, todayTotal, historyTotal
+
 
 def answer(cookies):
     print("\n【答题】")
@@ -719,6 +747,7 @@ def answer(cookies):
                 return
             time.sleep(1)
 
+
 def saveListenTime(cookies, date_stamp):
     print("\n【刷时长1】")
     headers = {
@@ -727,8 +756,8 @@ def saveListenTime(cookies, date_stamp):
         'Content-Type': 'application/x-www-form-urlencoded',
     }
     listentime = date_stamp
-    print(f"上传本地收听时长1: {listentime//60}分钟")
-    currentTimeMillis = int(time.time()*1000)-2
+    print(f"上传本地收听时长1: {listentime // 60}分钟")
+    currentTimeMillis = int(time.time() * 1000) - 2
     uid = get_uid(cookies)
     sign = hashlib.md5(
         f'currenttimemillis={currentTimeMillis}&listentime={listentime}&uid={uid}&23627d1451047b8d257a96af5db359538f081d651df75b4aa169508547208159'.encode()).hexdigest()
@@ -748,16 +777,17 @@ def saveListenTime(cookies, date_stamp):
         return
     print(response.text)
 
+
 def listenData(cookies, date_stamp):
     print("\n【刷时长2】")
     headers = {
-        'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 10; 16th Build/QKQ1.191222.002)',
+        'User-Agent': 'ting_v1.1.9_c5(CFNetwork, iOS 14.0.1, iPhone9,2)',
         'Host': 'm.ximalaya.com',
         'Content-Type': 'application/json',
     }
-    listentime = date_stamp-1
-    print(f"上传本地收听时长2: {listentime//60}分钟")
-    currentTimeMillis = int(time.time()*1000)
+    listentime = date_stamp - 1
+    print(f"上传本地收听时长2: {listentime // 60}分钟")
+    currentTimeMillis = int(time.time() * 1000)
     uid = get_uid(cookies)
     sign = hashlib.md5(
         f'currenttimemillis={currentTimeMillis}&listentime={listentime}&uid={uid}&23627d1451047b8d257a96af5db359538f081d651df75b4aa169508547208159'.encode()).hexdigest()
@@ -775,6 +805,7 @@ def listenData(cookies, date_stamp):
         return
     print(response.text)
 
+
 def card_exchangeCoin(cookies, themeId, cardIdList, _datatime):
     headers = {
         'Host': 'm.ximalaya.com',
@@ -786,7 +817,7 @@ def card_exchangeCoin(cookies, themeId, cardIdList, _datatime):
         'Accept-Encoding': 'gzip, deflate, br',
     }
     token = requests_session().get('https://m.ximalaya.com/speed/web-earn/card/token/3',
-                                   headers=headers, cookies=cookies,).json()["data"]["id"]
+                                   headers=headers, cookies=cookies, ).json()["data"]["id"]
     uid = get_uid(cookies)
     data = {
         "cardIdList": cardIdList,
@@ -809,6 +840,7 @@ def card_exchangeCoin(cookies, themeId, cardIdList, _datatime):
         return
     print("card_exchangeCoin: ", response.text)
 
+
 def card_exchangeCard(cookies, toCardAwardId, fromRecordIdList):
     fromRecordIdList = sorted(fromRecordIdList)
     headers = {
@@ -830,6 +862,7 @@ def card_exchangeCard(cookies, toCardAwardId, fromRecordIdList):
         print("网络请求异常,为避免GitHub action报错,直接跳过")
         return
     print(response.text)
+
 
 def draw_5card(cookies, drawRecordIdList):  # 五连抽
     drawRecordIdList = sorted(drawRecordIdList)
@@ -854,6 +887,7 @@ def draw_5card(cookies, drawRecordIdList):  # 五连抽
         return
     print("五连抽: ", response.text)
 
+
 def card(cookies, _datatime):
     print("\n【抽卡】")
     headers = {
@@ -876,7 +910,7 @@ def card(cookies, _datatime):
     # 5连抽
     drawRecordIdList = data["drawRecordIdList"]
     print("抽卡机会: ", drawRecordIdList)
-    for _ in range(len(drawRecordIdList)//5):
+    for _ in range(len(drawRecordIdList) // 5):
         tmp = []
         for _ in range(5):
             tmp.append(drawRecordIdList.pop())
@@ -926,10 +960,10 @@ def card(cookies, _datatime):
     userCardsList = data["userCardsList"]
     omnipotentCard = [i for i in userCardsList if i["id"] == 1]
     cityCardId = [i["id"] for i in userCardsList if i["themeId"] == 9]
-    need = set(themeId_id_map[9])-set(cityCardId)
+    need = set(themeId_id_map[9]) - set(cityCardId)
 
     print("万能卡: ", [i['recordId'] for i in omnipotentCard])
-    for _ in range(len(omnipotentCard)//4):
+    for _ in range(len(omnipotentCard) // 4):
         tmp = []
         for _ in range(4):
             tmp.append(omnipotentCard.pop())
@@ -938,8 +972,10 @@ def card(cookies, _datatime):
             print("万能卡兑换稀有卡:")
             card_exchangeCard(cookies, need.pop(), fromRecordIdList)
 
+
 def get_uid(cookies):
     return cookies["1&_token"].split("&")[0]
+
 
 def third_pay_info(cookies):
     print("\n【获取提现账号信息】")
@@ -955,7 +991,8 @@ def third_pay_info(cookies):
     }
     try:
         response = requests_session().get(
-            f'https://m.ximalaya.com/speed/web-earn/account/third-pay-account/{thirdPayType}', headers=headers, cookies=cookies).json()
+            f'https://m.ximalaya.com/speed/web-earn/account/third-pay-account/{thirdPayType}', headers=headers,
+            cookies=cookies).json()
         print(response)
         if response['code'] == 0:
             return response['data'][-1]
@@ -964,6 +1001,7 @@ def third_pay_info(cookies):
     except:
         print("网络请求异常,为避免GitHub action报错,直接跳过")
         return
+
 
 def task_out_info(cookies):
     print("\n【获取提现信息】")
@@ -989,6 +1027,7 @@ def task_out_info(cookies):
         print("网络请求异常,为避免GitHub action报错,直接跳过")
         return
 
+
 def task_out(cookies, body):
     print("\n【自动提现】")
     headers = {
@@ -996,19 +1035,22 @@ def task_out(cookies, body):
         'Content-Type': 'application/json;charset=utf-8',
         'Connection': 'keep-alive',
         'Accept': 'application/json, text/plain, */*',
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 10; 16th Build/QKQ1.191222.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045514 Mobile Safari/537.36 kdtUnion_iting/2.1.6 iting/2.1.6',
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 iting/2.0.3 kdtunion_iting/1.0 iting(main)/2.0.3/ios_1',
         'Referer': 'https://m.ximalaya.com/growth-ssr-speed-welfare-center/page/withdraw',
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
     }
     try:
         response = requests_session().post(
-            'https://m.ximalaya.com/speed/web-earn/account/take-out', headers=headers, cookies=cookies, data=json.dumps(body).encode('utf-8')).json()
+            'https://m.ximalaya.com/speed/web-earn/account/take-out', headers=headers, cookies=cookies,
+            data=json.dumps(body).encode('utf-8')).json()
         if not response['errorCode']:
             return True
         print(response)
     except:
         print("网络请求异常,为避免GitHub action报错,直接跳过")
+
+
 def user_info(cookies):
     print("\n【用户信息】")
     headers = {
@@ -1018,23 +1060,25 @@ def user_info(cookies):
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
     }
-    currentTimeMillis = int(time.time()*1000)-2
+    currentTimeMillis = int(time.time() * 1000) - 2
     try:
         response = requests_session().get(
-            f'https://mobile.ximalaya.com/fmobile-user/homePage/ts-{currentTimeMillis}', headers=headers, cookies=cookies).json()
+            f'https://mobile.ximalaya.com/fmobile-user/homePage/ts-{currentTimeMillis}', headers=headers,
+            cookies=cookies).json()
         print(response)
         if response['ret'] == 0:
             return response
     except:
         print("网络请求异常,为避免GitHub action报错,直接跳过")
 
+
 def run():
-    print(f"😄喜马拉雅极速版")
+    print(f"喜马拉雅极速版 (https://github.com/Zero-S1/xmly_speed/blob/master/xmly_speed.md ) ,欢迎打赏¯\(°_o)/¯")
     mins, date_stamp, _datatime, _notify_time = get_time()
     title = '⏰ 喜马拉雅极速版'
     table = []
     for k, v in enumerate(cookiesList):
-        print(f">>>>>>>【账号开始{k+1}】\n")
+        print(f">>>>>>>【账号开始{k + 1}】\n")
         cookies = str2dict(v)
         user_info_res = user_info(cookies)
         if XMLY_ACCUMULATE_TIME == 1:
@@ -1046,7 +1090,7 @@ def run():
         # continue
         continuousDays = checkin(cookies, _datatime)  # 自动签到
         # lottery_info(cookies)  # 大转盘4次
-        answer(cookies)      # 答题赚金币
+        answer(cookies)  # 答题赚金币
         cardReportTime(cookies, mins, date_stamp, _datatime)  # 卡牌
         getOmnipotentCard(cookies, mins, date_stamp, _datatime)  # 领取万能卡
         card(cookies, _datatime)  # 抽卡
@@ -1057,9 +1101,9 @@ def run():
         except IndexError:
             device = cookies['device_model']
         else:
-            device = f"设备{k+1}"
+            device = f"设备{k + 1}"
 
-        table.append((device, total, todayTotal,
+        table.append((user_info_res['nickname'], total, todayTotal,
                       historyTotal, continuousDays,))
 
         if autoTakeOut and total >= amount:
@@ -1072,11 +1116,11 @@ def run():
                     send(title=title, content=f"{user_info_res['nickname']} 提现到账户【{pay_info['accountNumber']}】20元成功")
             else:
                 send(title=title, content=f"请先手动填写【user_info_res['nickname']】支付宝账号提现一次")
-        print("###"*20)
-        print("\n"*4)
+        print("###" * 20)
+        print("\n" * 4)
 
     if int(_notify_time.split()[0]) == notify_time and int(_notify_time.split()[1]) < 5:
-    # if 1:
+        # if 1:
         message = ''
         for i in table:
             message += f"【当前账户】：{i[0].replace(' ',''):<9}\n"
@@ -1087,6 +1131,7 @@ def run():
             message += f"\n"
 
         send(title=title, content=message)
+
 
 if __name__ == "__main__":
     run()
