@@ -780,7 +780,7 @@ def saveListenTime(cookies, date_stamp):
 def listenData(cookies, date_stamp):
     print("\n【刷时长2】")
     headers = {
-        'User-Agent': 'ting_v1.1.9_c5(CFNetwork, iOS 14.0.1, iPhone9,2)',
+        'User-Agent': 'ting_1.7.24(16th,Android29)',
         'Host': 'm.ximalaya.com',
         'Content-Type': 'application/json',
     }
@@ -1034,7 +1034,7 @@ def task_out(cookies, body):
         'Content-Type': 'application/json;charset=utf-8',
         'Connection': 'keep-alive',
         'Accept': 'application/json, text/plain, */*',
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 iting/2.0.3 kdtunion_iting/1.0 iting(main)/2.0.3/ios_1',
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 10; 16th Build/QKQ1.191222.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045230 Mobile Safari/537.36',
         'Referer': 'https://m.ximalaya.com/growth-ssr-speed-welfare-center/page/withdraw',
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
@@ -1055,7 +1055,7 @@ def user_info(cookies):
     headers = {
         'Host': 'mobile.ximalaya.com',
         'Accept': '*/*',
-        'User-Agent': 'ting_v2.1.3_c5(CFNetwork, iOS 14.4, iPhone13,2)',
+        'User-Agent': 'ting_1.7.24(16th,Android29)',
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
     }
